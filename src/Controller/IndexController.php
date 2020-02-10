@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\CardTemplateRepository;
 
 class IndexController extends AbstractController
 {
@@ -23,5 +24,18 @@ class IndexController extends AbstractController
     public function templates()
     {
       return $this->render('index/templates.html.twig');
+    }
+
+    
+    /**
+     * @Route("/templates", name="templates")
+     */
+    public function produit(CardTemplateRepository $templateRepository)
+    {
+        $templates = $templateRepository->findAll();
+        return $this->render('index/templates.html.twig', [
+            'templates' => $templates,
+            'controller_name' => 'TemplatesController',
+        ]);
     }
 }
